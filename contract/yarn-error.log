@@ -1,0 +1,43 @@
+Arguments: 
+  /Users/adachi_tomoki/.nodebrew/node/v16.14.0/bin/node /Users/adachi_tomoki/.nodebrew/current/bin/yarn add --dev harahat
+
+PATH: 
+  /Users/adachi_tomoki/.nodebrew/current/bin:/Users/adachi_tomoki/.nvm/versions/node/v15.11.0/bin:/Users/adachi_tomoki/.local/bin:/Users/adachi_tomoki/Library/Android/sdk/platform-tools:/opt/homebrew/opt/mysql@5.7/bin:/usr/local/opt/mysql@5.7/bin:/opt/homebrew/bin:/Users/adachi_tomoki/.local/share/solana/install/active_release/bin:/Users/adachi_tomoki/.local/share/solana/install/active_release/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/adachi_tomoki/.cargo/bin:/Users/adachi_tomoki/Library/flutter/bin:/Users/adachi_tomoki/Library/flutter/.pub-cache/bin:/Users/adachi_tomoki/Library/flutter/cache/dart-sdk/bin
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  16.14.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/harahat: Not found
+      at Request.params.callback [as _callback] (/Users/adachi_tomoki/.nodebrew/node/v16.14.0/lib/node_modules/yarn/lib/cli.js:66138:18)
+      at Request.self.callback (/Users/adachi_tomoki/.nodebrew/node/v16.14.0/lib/node_modules/yarn/lib/cli.js:140883:22)
+      at Request.emit (node:events:520:28)
+      at Request.<anonymous> (/Users/adachi_tomoki/.nodebrew/node/v16.14.0/lib/node_modules/yarn/lib/cli.js:141855:10)
+      at Request.emit (node:events:520:28)
+      at IncomingMessage.<anonymous> (/Users/adachi_tomoki/.nodebrew/node/v16.14.0/lib/node_modules/yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (node:events:639:28)
+      at IncomingMessage.emit (node:events:532:35)
+      at endReadableNT (node:internal/streams/readable:1346:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "nft-account",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/adachi-440/nft-account.git",
+    "author": "adachi_440 <tomoki1999314@gmail.com>",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
