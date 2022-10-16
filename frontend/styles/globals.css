@@ -40,3 +40,71 @@ a {
     background: black;
   }
 }
+
+.mein-menu-list{
+  display: flex;
+  text-align:  center;  
+  margin-left: 50px; 
+}
+.padding-24px{
+  
+  padding: 32px
+}
+.title-menu{
+  font-family: 'Raleway';
+font-style: normal;
+font-weight: 800;
+font-size: 60px;
+line-height: 120px;
+text-align: center;
+text-transform: uppercase;
+
+/* #FFFFFF */
+
+color: #FFFFFF;
+}
+.title-submenu{
+  font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 32px;
+line-height: 10px;
+text-align: center;
+text-transform: uppercase;
+
+/* #FFFFFF */
+
+color: #FFFFFF;
+}
+
+.account-nft-list{
+  display: flex;
+  text-align:  center;  
+  margin: 50px; 
+}
+
+.choose-account-nft{
+  box-shadow: 0 20px 25px 0 rgba(60, 194, 235, 0.5);
+  margin: 20px;
+  
+}
+
+.character-list{
+  padding: 20px;
+}
+
+.summon-image{
+  text-align: center;
+}
+
+.clear-decoration {
+  border: none;  /* 枠線を消す */
+  outline: none; /* クリックしたときに表示される枠線を消す */
+  background: transparent; /* 背景の灰色を消す */
+}
+.battle-button{
+  text-align: center;
+  margin-left:48%;
+  margin-top: 20px;
+
+}
