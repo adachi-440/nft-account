@@ -14,6 +14,8 @@ const TitleAccount: NextPage = () => {
   const { setTheme } = useNextTheme()
   const { isDark } = useTheme()
 
+
+
   return (
     <div>
     <p className='title-menu'>Account 🌱</p>
