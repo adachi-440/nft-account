@@ -9,25 +9,37 @@ import maho from '../images/maho.png'
 import option from '../images/option.png'
 import battle from '../images/battle.png'
 import { useRef, useEffect } from 'react'
-
-
+import { useContract, useSigner } from 'wagmi'
+import { ITEM_ABI, ITEM_CONTRACT } from '../utils/const'
+import { toast } from 'react-toastify'
 
 const SummonNFT: NextPage = () => {
   const { setTheme } = useNextTheme()
   const { isDark } = useTheme()
-  function SummonNFT() {
+  const { data: signer } = useSigner()
+  const contract = useContract({
+    address: ITEM_CONTRACT,
+    abi: ITEM_ABI,
+    signerOrProvider: signer,
+  })
+
+  async function SummonNFT() {
     //todo ここにNFTmintの処理を入れる
-    window.confirm("これが確認ダイアログです。");
+
+    if (contract) {
+      const tx = await contract.mint(1000, 2000)
+      await tx.wait()
+      toast('Mint NFT!')
+    }
   }
 
-
-
   return (
-    <div　className='summon-image'>
-       <button className='clear-decoration' onClick={SummonNFT}> <Image src={maho}width={450} height={400} alt="ii" /> </button>
-
+    <div className='summon-image'>
+      <button className='clear-decoration' onClick={SummonNFT}>
+        {' '}
+        <Image src={maho} width={450} height={400} alt='ii' />{' '}
+      </button>
     </div>
-    
   )
 }
 

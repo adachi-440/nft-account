@@ -14,7 +14,7 @@ interface IAccount is IERC721{
     uint256[] tokenIds;
   }
 
-  function mint(address _to, OwnData memory _data) external;
+  function mint(OwnData memory _data) external;
   function lock(address _to, uint256 _tokenId) external;
 }
 
@@ -22,7 +22,7 @@ contract Account is ERC721, Ownable, IAccount {
   using Counters for Counters.Counter;
 
   Counters.Counter private _supply;
-	string private baseURI;
+	string public baseURI;
 
   mapping (uint256 => OwnData[]) associatedDataWithTokenId;
 
@@ -31,15 +31,15 @@ contract Account is ERC721, Ownable, IAccount {
 		setBaseURI(_initBaseURI);
 	}
 
-  function mint(address _to, OwnData memory _data) external onlyOwner {
-    _safeMint(_to, _supply.current());
+  function mint(OwnData memory _data) external {
+    _safeMint(msg.sender, _supply.current());
     IGameItem item = IGameItem(_data.srcContract);
-    require(item.isApprovedForAll(_to, address(this)), "Account: This contract has not been approved");
-    uint256[] memory amounts;
-    for (uint i = 0; i < amounts.length; i++) {
+    require(item.isApprovedForAll(msg.sender, address(this)), "Account: This contract has not been approved");
+    uint256[] memory amounts = new uint256[](2);
+    for (uint i = 0; i < _data.tokenIds.length; i++) {
       amounts[i] = 1;
     }
-    item.safeBatchTransferFrom(msg.sender, _to, _data.tokenIds, amounts, "");
+    item.safeBatchTransferFrom(msg.sender, address(this), _data.tokenIds, amounts, "");
     associatedDataWithTokenId[_supply.current()].push(_data);
     _supply.increment();
   }
@@ -51,8 +51,24 @@ contract Account is ERC721, Ownable, IAccount {
     safeTransferFrom(msg.sender, _to, _tokenId);
   }
 
+  function associatedDataWith(uint256 _tokenId) external view returns (OwnData[] memory data) {
+    data = associatedDataWithTokenId[_tokenId];
+  }
+
 
   function setBaseURI(string memory _newBaseURI) public {
 		baseURI = _newBaseURI;
 	}
+
+  function onERC1155Received(address, address, uint256, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155Received.selector;
+    }
+
+    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155BatchReceived.selector;
+    }
+
+    function onERC721Received(address, address, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC721Received.selector;
+    }
 }

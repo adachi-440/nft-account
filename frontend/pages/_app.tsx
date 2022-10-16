@@ -12,7 +12,9 @@ import {
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
-import "../styles/globals.css";
+import '../styles/globals.css'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // Dark Mode
 const lightTheme = createTheme({
@@ -53,6 +55,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider chains={chains} theme={rainbowDarkTheme()}>
             <Component {...pageProps} />
+            <ToastContainer />
           </RainbowKitProvider>
         </WagmiConfig>
       </NextUIProvider>

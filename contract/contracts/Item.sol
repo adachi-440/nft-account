@@ -58,30 +58,31 @@ contract Item is IGameItem, ERC1155, ChainlinkClient, ConfirmedOwner {
 
     mapping(uint256 => GameResult) public gameResultOfTokenId;
 
-    mapping (uint256 => uint256) public getAttackPointOfTokenId;
+    mapping(uint256 => uint256) public getAttackPointOfTokenId;
 
-    mapping (uint256 => uint256) public getHpOfAttackTokenId;
+    mapping(uint256 => uint256) public getHpOfAttackTokenId;
 
     mapping(uint256 => address) public ownerOfTokenId;
 
     constructor(address _linkToken)
         ERC1155(
             "https://ipfs.io/ipfs/bafybeihjjkwdrxxjnuwevlqtqmh3iegcadc32sio4wmo7bv2gbf34qs34a/{id}.json"
-        ) ConfirmedOwner(msg.sender)
+        )
+        ConfirmedOwner(msg.sender)
     {
-      _currentId = 1;
-      setChainlinkToken(_linkToken);
-      _fee = (1 * LINK_DIVISIBILITY) / 10;
+        _currentId = 1;
+        setChainlinkToken(_linkToken);
+        _fee = (1 * LINK_DIVISIBILITY) / 10;
     }
 
     function mint(uint256 attackPoint, uint256 hp) external payable onlyOwner {
-      _mint(msg.sender, _currentId, 1, "");
+        _mint(msg.sender, _currentId, 1, "");
 
-      // TODO Random number generation is desirable here too.
-      getAttackPointOfTokenId[_currentId] = attackPoint;
-      getHpOfAttackTokenId[_currentId] = hp;
-      ownerOfTokenId[_currentId] = msg.sender;
-      _currentId++;
+        // TODO Random number generation is desirable here too.
+        getAttackPointOfTokenId[_currentId] = attackPoint;
+        getHpOfAttackTokenId[_currentId] = hp;
+        ownerOfTokenId[_currentId] = msg.sender;
+        _currentId++;
     }
 
     function gameResultsOfAccount(uint256[] memory _tokenIds)
@@ -89,36 +90,57 @@ contract Item is IGameItem, ERC1155, ChainlinkClient, ConfirmedOwner {
         view
         returns (GameResult[] memory result)
     {
-      for (uint i = 0; i < _tokenIds.length; i++) {
-        result[i] = gameResultOfTokenId[_tokenIds[i]];
-      }
+        for (uint i = 0; i < _tokenIds.length; i++) {
+            result[i] = gameResultOfTokenId[_tokenIds[i]];
+        }
     }
 
-      function gameResultsOfTokenId(uint256 _tokenId) external view returns(GameResult memory result) {
+    function gameResultsOfTokenId(uint256 _tokenId)
+        external
+        view
+        returns (GameResult memory result)
+    {
         result = gameResultOfTokenId[_tokenId];
-      }
+    }
 
     // TODO Change to use chainlink Any API
-    function gameJudge(uint256 _tokenId) external payable override returns (bool win) {
-      uint256 enemyAttackPoint = 1000;
-      uint256 ownAttackPoint = getAttackPointOfTokenId[_tokenId];
+    function gameJudge(uint256 _tokenId)
+        external
+        payable
+        override
+        returns (bool win)
+    {
+        uint256 enemyAttackPoint = 1000;
+        uint256 ownAttackPoint = getAttackPointOfTokenId[_tokenId];
 
-      int256 damage = int256(ownAttackPoint) - int256(enemyAttackPoint);
-      win = damage > 0;
-      if(win) {
-        gameResultOfTokenId[_tokenId].win++;
-        getHpOfAttackTokenId[_tokenId] = getHpOfAttackTokenId[_tokenId] - uint256(damage);
-      } else {
-        gameResultOfTokenId[_tokenId].lose++;
-        getHpOfAttackTokenId[_tokenId] = 0;
-      }
+        int256 damage = int256(ownAttackPoint) - int256(enemyAttackPoint);
+        win = damage > 0;
+        if (win) {
+            gameResultOfTokenId[_tokenId].win++;
+            getHpOfAttackTokenId[_tokenId] =
+                getHpOfAttackTokenId[_tokenId] -
+                uint256(damage);
+        } else {
+            gameResultOfTokenId[_tokenId].lose++;
+            getHpOfAttackTokenId[_tokenId] = 0;
+        }
 
-      emit Result(msg.sender, _tokenId, win);
+        emit Result(msg.sender, _tokenId, win);
     }
 
-    function requestRandomNumber(uint256 _tokenId) public returns (bytes32 requestId) {
-        Chainlink.Request memory req = buildChainlinkRequest(_jobId, address(this), this.fulfill.selector);
-        req.add('get', "http://www.randomnumberapi.com/api/v1.0/random?min=100&max=2000&count=1");
+    function requestRandomNumber(uint256 _tokenId)
+        public
+        returns (bytes32 requestId)
+    {
+        Chainlink.Request memory req = buildChainlinkRequest(
+            _jobId,
+            address(this),
+            this.fulfill.selector
+        );
+        req.add(
+            "get",
+            "http://www.randomnumberapi.com/api/v1.0/random?min=100&max=2000&count=1"
+        );
         req.add("tokenId", Strings.toString(_tokenId));
         return sendChainlinkRequest(req, _fee);
     }
@@ -133,30 +155,34 @@ contract Item is IGameItem, ERC1155, ChainlinkClient, ConfirmedOwner {
         // TODO Damage Calculation
     }
 
-  function setOracle(address _oracle) external onlyOwner {
-    setChainlinkOracle(_oracle);
-  }
-
-  function setJobId(string memory _id) external onlyOwner {
-    bytes memory tempEmptyStringTest = bytes(_id);
-    require(tempEmptyStringTest.length != 0, "Item: Error");
-
-    bytes32 result;
-    assembly {
-        result := mload(add(_id, 32))
+    function setOracle(address _oracle) external onlyOwner {
+        setChainlinkOracle(_oracle);
     }
-    _jobId = result;
-  }
 
-    function getAttackPoint(uint256 _tokenId) external view returns (uint256 point) {
-      point = getAttackPointOfTokenId[_tokenId];
+    function setJobId(string memory _id) external onlyOwner {
+        bytes memory tempEmptyStringTest = bytes(_id);
+        require(tempEmptyStringTest.length != 0, "Item: Error");
+
+        bytes32 result;
+        assembly {
+            result := mload(add(_id, 32))
+        }
+        _jobId = result;
+    }
+
+    function getAttackPoint(uint256 _tokenId)
+        external
+        view
+        returns (uint256 point)
+    {
+        point = getAttackPointOfTokenId[_tokenId];
     }
 
     function getHp(uint256 _tokenId) external view returns (uint256 point) {
-      point = getHpOfAttackTokenId[_tokenId];
+        point = getHpOfAttackTokenId[_tokenId];
     }
 
-    function ownerOf(uint256 _tokenId) external view returns(address owner){
-      owner = ownerOfTokenId[_tokenId];
+    function ownerOf(uint256 _tokenId) external view returns (address owner) {
+        owner = ownerOfTokenId[_tokenId];
     }
 }

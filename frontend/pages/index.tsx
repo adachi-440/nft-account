@@ -9,14 +9,10 @@ import Mint from '../components/Mint'
 import Title from '../components/Title'
 import styles from '../styles/Home.module.css'
 
-
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <Container>
-        <Mint />
-      </Container>
       <Title />
       <Mainmenu />
       <AccountNFT />
