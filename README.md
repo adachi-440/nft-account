@@ -20,7 +20,7 @@ The second problem is solved by separating the data to be stored by chain.
 
 The Ethereum chain controls ownership of the most important game data. This allows us to approach the Ethereum ecosystem. The actual game will be played on Arbitrum. This is where we store the item NFTs, as well as on-chain actions, SBTs, etc.
 
-##User Flow
+## User Flow
 1.Purchase a gameplay account NFT
 2.If No.1 is ETH, bridge and create an account on Arbitrum.
 3.Minting characters for the game.
@@ -28,9 +28,9 @@ The Ethereum chain controls ownership of the most important game data. This allo
 5.Owned characters, battle history, level, experience, etc. are tied to tokens.
 6.Buying and selling account tokens makes the account transferable.
 
-# deployed contract
+## deployed contract
 
-## Arbitrum GOERLI
+### Arbitrum GOERLI
 
 | contract  |                                                                                                                                                contract address |
 | :-------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------: |
