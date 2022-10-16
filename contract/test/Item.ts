@@ -1,17 +1,19 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { ethers } from "hardhat"
-import { Item, Item__factory } from "../typechain-types"
+import { Account, Account__factory, Item, Item__factory } from "../typechain-types"
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers"
 import { expect } from "chai"
 import { ContractReceipt, utils } from "ethers"
+import { emitWarning } from "process"
 
 
-interface ItemFixture {
+export interface ItemFixture {
   Item: Item__factory
   item: Item
   owner: SignerWithAddress
   ownerAddress: string
 }
+
 
 describe("Item contract", function () {
   async function deployItemFixture(): Promise<ItemFixture> {

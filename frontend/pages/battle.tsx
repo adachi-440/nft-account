@@ -1,27 +1,24 @@
-import React from "react";
-import Head from 'next/head';
-import { Text, Spacer, Container } from "@nextui-org/react";
-import AccountNFT from "../components/AccountNFT";
-import Header from "../components/Header";
-import Mainmenu from "../components/Mainmenu";
-import Mint from "../components/Mint";
-import Title from "../components/Title";
+import React from 'react'
+import Head from 'next/head'
+import { Text, Spacer, Container } from '@nextui-org/react'
+import AccountNFT from '../components/AccountNFT'
+import Header from '../components/Header'
+import Mainmenu from '../components/Mainmenu'
+import Mint from '../components/Mint'
+import Title from '../components/Title'
 import styles from '../styles/Home.module.css'
-import TitleAccount from "../components/TitleAccount";
-import TitleBattle from "../components/TitleBattle";
-import BattleEnemy from "../components/BattleEnemy";
+import TitleAccount from '../components/TitleAccount'
+import TitleBattle from '../components/TitleBattle'
+import BattleEnemy from '../components/BattleEnemy'
 
 const BattlePage = () => {
-    return (
-        <div className={styles.container}>
-        <Header />
-        <Container>
-          <Mint />
-        </Container>
-        <TitleBattle />
-        <BattleEnemy />
-      </div>
-    )
+  return (
+    <div className={styles.container}>
+      <Header />
+      <TitleBattle />
+      <BattleEnemy />
+    </div>
+  )
 }
 
-export default BattlePage;
+export default BattlePage
